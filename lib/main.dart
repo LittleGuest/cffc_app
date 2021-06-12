@@ -6,9 +6,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-final dylib = Platform.isLinux
-    ? DynamicLibrary.open('dylib/linux/libcffc.so')
-    : DynamicLibrary.process();
+final dylib = DynamicLibrary.open(_dylibPath());
+
+/// 动态链接库地址
+String _dylibPath() {
+  var root = "dylib/";
+  if (Platform.isLinux) {
+    return root + "linux/libcffc.so";
+  } else if (Platform.isWindows) {
+    return root + "windows/cffc.dll";
+  } else if (Platform.isMacOS) {
+    return root + "macos/libcffc.so";
+  } else if (Platform.isAndroid) {
+    return root + "android/libcffc.so";
+  } else if (Platform.isIOS) {
+    return root + "ios/libcffc.so";
+  } else if (Platform.isFuchsia) {
+    return root + "fuchsia/libcffc.so";
+  }
+  return root;
+}
 
 typedef cc = Pointer<Utf8> Function(
     Pointer<Utf8> from, Pointer<Utf8> to, Pointer<Utf8> text);

@@ -30,6 +30,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   ffi: ^1.1.2
   fluttertoast: ^8.0.7
+  msix: ^2.1.2
 
 dev_dependencies:
   flutter_test:
